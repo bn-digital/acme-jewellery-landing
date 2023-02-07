@@ -1,0 +1,16 @@
+.section {
+  border: 1px solid blue;
+  &.section-01 {
+    .section-content {
+
+      border: 1px solid red;
+      padding: 200px 0;
+      display: flex;
+      flex-direction: column;
+
+      justify-content: flex-start;
+      width: 50%;
+
+    }
+  }
+}
