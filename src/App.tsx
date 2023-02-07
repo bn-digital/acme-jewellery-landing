@@ -68,19 +68,13 @@ function App() {
 
         viewer.scene.activeCamera.setCameraOptions({controlsEnabled: true})
 
-        // HDR map setup
-
-        // await manager.addFromPath("./assets/ring11.glb")
 
         await manager.addFromPath("./assets/model/ring14.glb")
+        // @ts-ignore
         viewer.scene.setEnvironment(
-            await manager.importer.importSinglePath("./assets/hdr/warehouse.hdr")
+            await manager.importer!.importSinglePath("./assets/hdr/warehouse.hdr")
         )
         setIsLoading(false)
-
-        // const envMap = await manager.importer!.importSinglePath<ITexture>("https://demo-assets.pixotronics.com/pixo/hdr/p360-01.hdr")
-        // viewer.scene.setEnvironment(envMap);
-
 
         const camViewPlugin = viewer.getPlugin(CameraViewPlugin)
         const camera = viewer.scene.activeCamera
@@ -90,7 +84,6 @@ function App() {
         viewer.renderer.refreshPipeline()
 
         console.log(camViewPlugin?.camViews);
-        let view = camViewPlugin?.getCurrentCameraView(viewer.scene.activeCamera)
         viewer.scene.activeCamera.setCameraOptions({controlsEnabled: false})
 
         let needsUpdate = true;
@@ -152,7 +145,7 @@ function App() {
                         duration: 3,
                         onUpdate,
                         scrollTrigger: {
-                            trigger: '.footer', start: 'top bottom', end: 'top top', scrub: 3
+                            trigger: '.footer', start: 'top bottom', end: 'top 50%', scrub: 3
                         },
                         immediateRender: false
                     }
@@ -213,8 +206,6 @@ function App() {
         <Section02 />
         <Section03 />
         <Footer />
-
-
     </div>
   )
 }
