@@ -1,7 +1,7 @@
 import React from 'react';
 import './Sections.scss'
 
-const Section01 = () => {
+const Section02 = () => {
     return (
         <div className={'section section-01'}>
             <div className="container">
@@ -14,4 +14,4 @@ const Section01 = () => {
     );
 };
 
-export default Section01;
+export default Section02;

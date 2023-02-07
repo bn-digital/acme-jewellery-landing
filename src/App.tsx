@@ -15,6 +15,7 @@ import {
 import * as THREE from 'three';
 import Header from "./components/header/Header";
 import Section01 from "./components/sections/Section01";
+import Section02 from "./components/sections/Section02";
 
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
     <div className="App">
         <Header />
         <Section01 />
+        <Section02 />
         <div className="section">
             <h1>{'Section 02'}</h1>
         </div>
