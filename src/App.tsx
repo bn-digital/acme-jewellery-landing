@@ -1,19 +1,19 @@
 import './App.scss'
 import gsap from "gsap";
 
-// get other plugins:
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger)
-
-
 import {
     AssetManagerBasicPopupPlugin,
     AssetManagerPlugin,
-    BloomPlugin, CameraViewPlugin,
+    BloomPlugin,
+    CameraViewPlugin,
     CanvasSnipperPlugin,
     DiamondPlugin,
     GammaCorrectionPlugin,
-    GBufferPlugin, GroundPlugin, ITexture, ProgressivePlugin,
+    GBufferPlugin,
+    GroundPlugin,
+    ITexture,
+    ProgressivePlugin,
     SSAOPlugin,
     SSRPlugin,
     TonemapPlugin,
@@ -27,22 +27,15 @@ import {useState} from "react";
 import Loader from "./components/loader/Loader";
 import Footer from "./components/sections/Footer";
 
+gsap.registerPlugin(ScrollTrigger)
+
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
 
-    async function setupViewer(){
-        // const viewer = new ViewerApp({
-        //     canvas: document.getElementById('webgi-canvas') as HTMLCanvasElement,
-        //     useRgbm: true,
-        //     useGBufferDepth: true, // Uses depth prepass for faster rendering, has z-fighting in some cases.
-        //     isAntialiased: false, // Uses multi-sample render target. (only for extreme cases)
-        // })
-
+    async function setupViewer() {
         const viewer = new ViewerApp({
             canvas: document.getElementById('webgi-canvas') as HTMLCanvasElement,
-            // useGBufferDepth: true, // Uses depth prepass for faster rendering, has z-fighting in some cases.
-            // isAntialiased: true,
         })
 
         // Adding plugins
@@ -63,16 +56,12 @@ function App() {
         await viewer.addPlugin(GBufferPlugin)
         await viewer.addPlugin(new TonemapPlugin(true))
 
-
         viewer.renderer.refreshPipeline()
-
         viewer.scene.activeCamera.setCameraOptions({controlsEnabled: true})
 
-
         await manager.addFromPath("./assets/model/ring14.glb")
-        // @ts-ignore
         viewer.scene.setEnvironment(
-            await manager.importer!.importSinglePath("./assets/hdr/warehouse.hdr")
+            await manager.importer!.importSinglePath<ITexture<any>>("./assets/hdr/warehouse.hdr")
         )
         setIsLoading(false)
 
@@ -82,8 +71,6 @@ function App() {
         const target = camera.target
 
         viewer.renderer.refreshPipeline()
-
-        console.log(camViewPlugin?.camViews);
         viewer.scene.activeCamera.setCameraOptions({controlsEnabled: false})
 
         let needsUpdate = true;
@@ -162,24 +149,28 @@ function App() {
                         immediateRender: false
                     }
                 )
-                .to("#section-01-content", { xPercent:'-150' , opacity:0,
+                .to("#section-01-content", {
+                    xPercent: '-150', opacity: 0,
                     scrollTrigger: {
                         trigger: ".section-02",
-                        start:"top bottom",
+                        start: "top bottom",
                         end: "top 50%", scrub: 1,
                         immediateRender: false
-                    }})
+                    }
+                })
 
-                .to("#section-03-content", { xPercent:'150' , opacity:0,
+                .to("#section-03-content", {
+                    xPercent: '150', opacity: 0,
                     scrollTrigger: {
                         trigger: ".footer",
-                        start:"top bottom",
+                        start: "top bottom",
                         end: "top 80%", scrub: 1,
                         immediateRender: false
-                    }})
+                    }
+                })
         }
-        setupScrollAnimation()
 
+        setupScrollAnimation()
 
         //WEBGI update
         function onUpdate() {
@@ -188,26 +179,26 @@ function App() {
             viewer.setDirty()
         }
 
-
         viewer.addEventListener('preFrame', () => {
 
-            if(needsUpdate){
+            if (needsUpdate) {
                 camera.positionTargetUpdated(true)
                 needsUpdate = false
             }
         })
     }
-   setupViewer()
-  return (
-    <div className="App">
-        {isLoading && <Loader />}
-        <Header />
-        <Section01 />
-        <Section02 />
-        <Section03 />
-        <Footer />
-    </div>
-  )
+
+    setupViewer().then()
+    return (
+        <div className="App">
+            {isLoading && <Loader/>}
+            <Header/>
+            <Section01/>
+            <Section02/>
+            <Section03/>
+            <Footer/>
+        </div>
+    )
 }
 
 export default App
