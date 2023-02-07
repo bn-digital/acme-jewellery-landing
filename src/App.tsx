@@ -2,94 +2,218 @@ import './App.scss'
 import gsap from "gsap";
 
 // get other plugins:
-import ScrollTrigger from "gsap/ScrollTrigger";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger)
+
+
 import {
-    addBasePlugins,
+    AssetManagerBasicPopupPlugin,
     AssetManagerPlugin,
-    CameraViewPlugin, DiamondPlugin,
-    EasingFunctions,
-    GLTFAnimationPlugin, GroundPlugin, PickingPlugin,
-    timeout, TonemapPlugin,
-    ViewerApp
+    BloomPlugin, CameraViewPlugin,
+    CanvasSnipperPlugin,
+    DiamondPlugin,
+    GammaCorrectionPlugin,
+    GBufferPlugin, GroundPlugin, ITexture, ProgressivePlugin,
+    SSAOPlugin,
+    SSRPlugin,
+    TonemapPlugin,
+    ViewerApp,
 } from "webgi";
-import * as THREE from 'three';
 import Header from "./components/header/Header";
 import Section01 from "./components/sections/Section01";
 import Section02 from "./components/sections/Section02";
+import Section03 from "./components/sections/Section03";
+import {useState} from "react";
+import Loader from "./components/loader/Loader";
+import Footer from "./components/sections/Footer";
 
 
 function App() {
-    async function setupViewer(){
+    const [isLoading, setIsLoading] = useState(true);
 
-        // Initialize the viewer
+    async function setupViewer(){
+        // const viewer = new ViewerApp({
+        //     canvas: document.getElementById('webgi-canvas') as HTMLCanvasElement,
+        //     useRgbm: true,
+        //     useGBufferDepth: true, // Uses depth prepass for faster rendering, has z-fighting in some cases.
+        //     isAntialiased: false, // Uses multi-sample render target. (only for extreme cases)
+        // })
+
         const viewer = new ViewerApp({
-            canvas: document.getElementById('mcanvas') as HTMLCanvasElement,
-            useRgbm: true,
+            canvas: document.getElementById('webgi-canvas') as HTMLCanvasElement,
+            // useGBufferDepth: true, // Uses depth prepass for faster rendering, has z-fighting in some cases.
+            // isAntialiased: true,
         })
 
-        // Add some plugins
+        // Adding plugins
         const manager = await viewer.addPlugin(AssetManagerPlugin)
+        await viewer.addPlugin(GBufferPlugin)
+        await viewer.addPlugin(new ProgressivePlugin(32))
+        await viewer.addPlugin(GammaCorrectionPlugin)
+        await viewer.addPlugin(SSRPlugin)
+        await viewer.addPlugin(SSAOPlugin)
+        await viewer.addPlugin(DiamondPlugin)
+        await viewer.addPlugin(CameraViewPlugin)
+        // await viewer.addPlugin(FrameFadePlugin)
+        // await viewer.addPlugin(GLTFAnimationPlugin)
+        await viewer.addPlugin(BloomPlugin)
+        await viewer.addPlugin(AssetManagerBasicPopupPlugin)
+        await viewer.addPlugin(CanvasSnipperPlugin)
+        await viewer.addPlugin(GroundPlugin);
+        await viewer.addPlugin(GBufferPlugin)
+        await viewer.addPlugin(new TonemapPlugin(true))
 
-        await addBasePlugins(viewer)
-        const camViews = viewer.getPlugin(CameraViewPlugin)
 
         viewer.renderer.refreshPipeline()
 
-        await manager.addFromPath("./assets/model/ring06.glb")
+        viewer.scene.activeCamera.setCameraOptions({controlsEnabled: true})
 
-        let view = camViews.getCurrentCameraView(viewer.scene.activeCamera)
-        camViews.camViews.push(view)
+        // HDR map setup
 
-        view = camViews.getCurrentCameraView(viewer.scene.activeCamera)
-        view.position.set(6,4,5)
-        camViews.camViews.push(view)
+        // await manager.addFromPath("./assets/ring11.glb")
 
-        view = camViews.getCurrentCameraView(viewer.scene.activeCamera)
-        view.position.set(-2,4,5)
-        view.target.set(0,1,0)
-        camViews.camViews.push(view)
-        camViews.animateOnScroll = true
+        await manager.addFromPath("./assets/model/ring14.glb")
+        viewer.scene.setEnvironment(
+            await manager.importer.importSinglePath("./assets/hdr/warehouse.hdr")
+        )
+        setIsLoading(false)
 
-
-        camViews.animDuration = 2000 // ms
-        // Allowed values: anticipate, backIn, backInOut, backOut, bounceIn, bounceInOut, bounceOut, circIn, circInOut, circOut, easeIn, easeInOut, easeOut, easeInOutSine
-        camViews.animEase = 'easeInOutSine' // default is easeInOutSine
-
-        await camViews.animateToView(camViews.camViews[2])
-        await timeout(1500)
-        await camViews.animateToView(camViews.camViews[1], 2000, EasingFunctions.easeIn) // Override duration and easing
-        await timeout(1500)
-        await camViews.animateToView(camViews.camViews[0])
-
-        // await camViews.animateAllViews() // Loop all views
+        // const envMap = await manager.importer!.importSinglePath<ITexture>("https://demo-assets.pixotronics.com/pixo/hdr/p360-01.hdr")
+        // viewer.scene.setEnvironment(envMap);
 
 
-        // Animate to a views without saving it
-        // view = camViews.getCurrentCameraView(viewer.scene.activeCamera)
-        // view.position.set(-2,4,5)
-        // view.target.set(0,1,0)
-        // await camViews.animateToView(view, 3000, EasingFunctions.easeInOutSine)
-        // view.position.set(2,4,5)
-        // await camViews.animateToView(view, 3000, EasingFunctions.easeInOutSine)
-        /// Chain further animations.
+        const camViewPlugin = viewer.getPlugin(CameraViewPlugin)
+        const camera = viewer.scene.activeCamera
+        const position = camera.position
+        const target = camera.target
+
+        viewer.renderer.refreshPipeline()
+
+        console.log(camViewPlugin?.camViews);
+        let view = camViewPlugin?.getCurrentCameraView(viewer.scene.activeCamera)
+        viewer.scene.activeCamera.setCameraOptions({controlsEnabled: false})
+
+        let needsUpdate = true;
+        onUpdate()
+
+        function setupScrollAnimation() {
+            const timeLine = gsap.timeline()
+            timeLine
+                .to(position, {
+                        x: camViewPlugin?.camViews[0].position.x,
+                        y: camViewPlugin?.camViews[0].position.y,
+                        z: camViewPlugin?.camViews[0].position.z,
+                        onUpdate,
+                        scrollTrigger: {
+                            trigger: '.section-02', start: 'top bottom', end: 'top 50%', scrub: 2
+                        },
+                        immediateRender: false
+
+                    }
+                )
+                .to(target, {
+                        x: camViewPlugin?.camViews[0].target.x,
+                        y: camViewPlugin?.camViews[0].target.y,
+                        z: camViewPlugin?.camViews[0].target.z,
+                        onUpdate,
+                        scrollTrigger: {
+                            trigger: '.section-02', start: 'top bottom', end: 'top top', scrub: 2
+                        },
+                        immediateRender: false
+                    }
+                )
+                .to(position, {
+                        x: camViewPlugin?.camViews[1].position.x,
+                        y: camViewPlugin?.camViews[1].position.y,
+                        z: camViewPlugin?.camViews[1].position.z,
+                        onUpdate,
+                        scrollTrigger: {
+                            trigger: '.section-03', start: 'top 80%', end: 'top top', scrub: 3
+                        },
+                        immediateRender: false
+
+                    }
+                )
+                .to(target, {
+                        x: camViewPlugin?.camViews[1].target.x,
+                        y: camViewPlugin?.camViews[1].target.y,
+                        z: camViewPlugin?.camViews[1].target.z,
+                        onUpdate,
+                        scrollTrigger: {
+                            trigger: '.section-03', start: 'top bottom', end: 'top top', scrub: 3
+                        },
+                        immediateRender: false
+                    }
+                )
+                .to(position, {
+                        x: camViewPlugin?.camViews[2].position.x,
+                        y: camViewPlugin?.camViews[2].position.y,
+                        z: camViewPlugin?.camViews[2].position.z,
+                        duration: 3,
+                        onUpdate,
+                        scrollTrigger: {
+                            trigger: '.footer', start: 'top bottom', end: 'top top', scrub: 3
+                        },
+                        immediateRender: false
+                    }
+                )
+                .to(target, {
+                        x: camViewPlugin?.camViews[2].target.x,
+                        y: camViewPlugin?.camViews[2].target.y,
+                        z: camViewPlugin?.camViews[2].target.z,
+                        duration: 3,
+                        onUpdate,
+                        scrollTrigger: {
+                            trigger: '.footer', start: 'top bottom', end: 'top top', scrub: 3
+                        },
+                        immediateRender: false
+                    }
+                )
+                .to("#section-01-content", { xPercent:'-150' , opacity:0,
+                    scrollTrigger: {
+                        trigger: ".section-02",
+                        start:"top bottom",
+                        end: "top 50%", scrub: 1,
+                        immediateRender: false
+                    }})
+
+                .to("#section-03-content", { xPercent:'150' , opacity:0,
+                    scrollTrigger: {
+                        trigger: ".footer",
+                        start:"top bottom",
+                        end: "top 80%", scrub: 1,
+                        immediateRender: false
+                    }})
+        }
+        setupScrollAnimation()
 
 
+        //WEBGI update
+        function onUpdate() {
+            needsUpdate = true
+            // viewer.renderer.resetShadows()
+            viewer.setDirty()
+        }
+
+
+        viewer.addEventListener('preFrame', () => {
+
+            if(needsUpdate){
+                camera.positionTargetUpdated(true)
+                needsUpdate = false
+            }
+        })
     }
    setupViewer()
   return (
     <div className="App">
+        {isLoading && <Loader />}
         <Header />
         <Section01 />
         <Section02 />
-        <div className="section">
-            <h1>{'Section 02'}</h1>
-        </div>
-        <div className="section">
-            <h1>{'Section 03'}</h1>
-        </div>
-        <div className="section">
-            <h1>{'Section 04'}</h1>
-        </div>
+        <Section03 />
+        <Footer />
+
 
     </div>
   )
