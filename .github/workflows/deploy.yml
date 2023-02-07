@@ -9,9 +9,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ github.event.repository.name }}.github.io/${{ github.event.repository.name }}
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
     steps:
     - name: Checkout sources
       uses: actions/checkout@v3
