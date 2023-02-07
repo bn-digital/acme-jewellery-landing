@@ -1,2 +1,4 @@
-# acme-mohamad-hneine-pursuit
-webgi-animations
+# Jewellery Landing
+
+## Documentation
+- [WebGI SDK](https://webgi.xyz/docs/index.html)
