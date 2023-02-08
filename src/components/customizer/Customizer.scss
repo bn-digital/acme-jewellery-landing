@@ -1,0 +1,46 @@
+.customizer {
+  position: fixed;
+  left: 30px;
+  top: 100px;
+  width: 200px;
+  border-radius: 20px;
+  box-shadow:  0 0 20px rgba(0, 0, 0, 0.28);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  visibility: hidden;
+  .section-title {
+    margin-bottom: 12px;
+  }
+
+  .customizer-btn {
+    width: 150px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    &:hover {
+      box-shadow:  0 0 5px rgba(0, 0, 0, 0.1);
+      outline: none;
+      border: transparent;
+      //border: 1px solid blue;
+
+    }
+
+    &:focus {
+      outline: none;
+    }
+    &#white {
+      background-color: #eaeaea;
+    }
+    &#yellow {
+      background-color: #ffb662;
+    }
+    &#red {
+      background-color: #d997a3;
+    }
+  }
+
+
+}
