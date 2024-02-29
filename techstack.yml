@@ -1,0 +1,220 @@
+repo_name: bn-digital/acme-jewellery-landing
+report_id: ea3a6d7b9e2f171b3d8213f76f20af4d
+version: 0.1
+repo_type: Public
+timestamp: '2024-02-29T18:33:55+00:00'
+requested_by: viaduksun
+provider: github
+branch: latest
+detected_tools_count: 16
+tools:
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package.json
+  detection_source: package.json
+  last_updated_by: Vlad Volkov
+  last_updated_on: 2023-02-07 12:52:08.000000000 Z
+- name: TypeScript
+  description: A superset of JavaScript that compiles to clean JavaScript output
+  website_url: http://www.typescriptlang.org
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1612/bynNY5dJ.jpg
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing
+  detection_source: Repo Metadata
+- name: Node.js
+  description: A platform built on Chrome's JavaScript runtime for easily building
+    fast, scalable network applications
+  website_url: http://nodejs.org/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1011/n1JRsFeB_400x400.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-07 11:24:03.000000000 Z
+- name: React
+  description: A JavaScript library for building user interfaces
+  website_url: https://reactjs.org/
+  version: 18.2.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript UI Libraries
+  image_url: https://img.stackshare.io/service/1020/OYIaJ1KK.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-07 11:24:03.000000000 Z
+- name: Sass
+  description: Syntactically Awesome Style Sheets
+  website_url: http://sass-lang.com/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: CSS Pre-processors / Extensions
+  image_url: https://img.stackshare.io/service/1171/jCR2zNJV.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-07 11:24:03.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing
+  detection_source: Repo Metadata
+- name: GitHub Actions
+  description: Automate your workflow from idea to production
+  website_url: https://github.com/features/actions
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/11563/actions.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/.github/workflows/deploy.yml
+  detection_source: ".github/workflows/deploy.yml"
+  last_updated_by: Vlad Volkov
+  last_updated_on: 2023-02-07 12:52:08.000000000 Z
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-07 11:24:03.000000000 Z
+- name: three.js
+  description: A JavaScript 3D library
+  website_url: https://threejs.org/
+  version: 0.149.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Game Development
+  image_url: https://img.stackshare.io/service/5883/preview.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-08 20:25:35.000000000 Z
+- name: "@types/node"
+  description: TypeScript definitions for Node.js
+  package_url: https://www.npmjs.com/@types/node
+  version: 18.13.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15809/default_5e5e8ac63beda29f31f1844df64d4b8247570a66.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-08 20:25:35.000000000 Z
+- name: "@types/react"
+  description: TypeScript definitions for React
+  package_url: https://www.npmjs.com/@types/react
+  version: 18.0.27
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15894/default_1d65e37e65b7f80761374f0202776043277d505d.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-08 20:25:35.000000000 Z
+- name: "@types/react-dom"
+  description: TypeScript definitions for React
+  package_url: https://www.npmjs.com/@types/react-dom
+  version: 18.0.10
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15946/default_54b691c123fc8979741e800e4dcd3936c0f3b246.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-08 20:25:35.000000000 Z
+- name: gsap
+  description: GSAP is a JavaScript library for building high-performance animations
+    that work in **every** major browser
+  package_url: https://www.npmjs.com/gsap
+  version: 3.11.4
+  license: Other
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17543/default_8d32936cb624bf7f51657c1540463db0a3c4106e.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-07 11:24:03.000000000 Z
+- name: node-sass
+  description: Wrapper around libsass
+  package_url: https://www.npmjs.com/node-sass
+  version: 8.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15827/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-08 20:25:35.000000000 Z
+- name: react-dom
+  description: React package for working with the DOM
+  package_url: https://www.npmjs.com/react-dom
+  version: 18.2.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15808/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-07 11:24:03.000000000 Z
+- name: three
+  description: JavaScript 3D library
+  package_url: https://www.npmjs.com/three
+  version: 0.149.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16653/default_cc0f40a737548852d2ee666c132c258c9a2c0cad.png
+  detection_source_url: https://github.com/bn-digital/acme-jewellery-landing/blob/latest/package-lock.json
+  detection_source: package.json
+  last_updated_by: Vadim Budko
+  last_updated_on: 2023-02-08 20:25:35.000000000 Z
